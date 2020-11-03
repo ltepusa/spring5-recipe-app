@@ -1,8 +1,15 @@
 package guru.springframework.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Ingredient {
 
@@ -12,48 +19,25 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
     @OneToOne(fetch = FetchType.EAGER)
-    private UnitMeasure uom;
+    private UnitMeasure um;
     @ManyToOne
     private Recipe recipe;
 
 
-    public Long getId() {
-        return id;
+    public Ingredient() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
+    public Ingredient(String description, BigDecimal amount, UnitMeasure um) {
         this.description = description;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public UnitMeasure getUom() {
-        return uom;
-    }
-
-    public void setUom(UnitMeasure uom) {
-        this.uom = uom;
-    }
-
-    public void setAmount(BigDecimal amount) {
         this.amount = amount;
+        this.um = um;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
+    public Ingredient(String description, BigDecimal amount, UnitMeasure um, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.um = um;
         this.recipe = recipe;
     }
+
 }
